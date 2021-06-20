@@ -11,6 +11,5 @@ set background=dark
 set autoindent
 set cindent
 set number
-set relativenumber
 set virtualedit=all
 
