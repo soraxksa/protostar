@@ -13,3 +13,7 @@ set cindent
 set number
 set virtualedit=all
 
+
+set backupdir=.backup/,~/.backup/,/tmp//
+set directory=.swp/,~/.swp/,/tmp//
+set undodir=.undo/,~/.undo/,/tmp//
