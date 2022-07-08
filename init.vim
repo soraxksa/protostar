@@ -13,13 +13,11 @@ set autoindent              " indent a new line the same amount as the line just
 set number                  " add line numbers
 set wildmode=longest,list   " get bash-like tab completions
 filetype plugin indent on   "allow auto-indenting depending on file type
-"syntax on                   " syntax highlighting
 set mouse=a                 " enable mouse click
 set clipboard=unnamedplus   " using system clipboard
 filetype plugin on
 set cursorline              " highlight current cursorline
 set ttyfast                 " Speed up scrolling in Vim
-" set spell                 " enable spell check (may need to download language package)
 set noswapfile            " disable creating swap file
 " set backupdir=~/.cache/vim " Directory to store backup files.
 set backupdir=.backup/,~/.backup/,/tmp//
@@ -27,22 +25,29 @@ set directory=.swp/,~/.swp/,/tmp//
 set undodir=.undo/,~/.undo/,/tmp//
 
 
+"need to install vim-plug first
+"
+"for unix/linux:
+"sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-call plug#begin("~/.vim/plugged")
- Plug 'scrooloose/nerdtree'
- Plug 'ryanoasis/vim-devicons'
- Plug 'honza/vim-snippets'
- Plug 'preservim/nerdcommenter'
- Plug 'mhinz/vim-startify'
- Plug 'neoclide/coc.nvim', {'branch': 'release'}
+call plug#begin("~/.config/nvim/plugged")
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
+    Plug 'scrooloose/nerdtree'
+    Plug 'ryanoasis/vim-devicons'
+" Plug 'honza/vim-snippets'
+" Plug 'preservim/nerdcommenter'
+" Plug 'mhinz/vim-startify'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 
 
 nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
+"nnoremap <C-t> :NERDTreeToggle<CR>
+"nnoremap <C-f> :NERDTreeFind<CR>
 
-
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 
 
