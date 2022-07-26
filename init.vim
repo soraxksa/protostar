@@ -1,3 +1,4 @@
+
 set nocompatible            " disable compatibility to old-time vi
 set showmatch               " show matching 
 set ignorecase              " case insensitive 
@@ -24,30 +25,58 @@ set backupdir=.backup/,~/.backup/,/tmp//
 set directory=.swp/,~/.swp/,/tmp//
 set undodir=.undo/,~/.undo/,/tmp//
 
-
-"need to install vim-plug first
-"
-"for unix/linux:
-"sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
+set tags=./tags;/
+ 
 call plug#begin("~/.config/nvim/plugged")
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'scrooloose/nerdtree'
     Plug 'ryanoasis/vim-devicons'
+    Plug 'liuchengxu/vista.vim'
+    Plug 'bfrg/vim-cpp-modern'
+    Plug 'luochen1990/rainbow'
+    Plug 'ludovicchabant/vim-gutentags'
 " Plug 'honza/vim-snippets'
 " Plug 'preservim/nerdcommenter'
 " Plug 'mhinz/vim-startify'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
+ 
 
-
-
-nnoremap <C-n> :NERDTree<CR>
-"nnoremap <C-t> :NERDTreeToggle<CR>
-"nnoremap <C-f> :NERDTreeFind<CR>
-
+nnoremap <C-n> :NERDTreeToggle<CR>
+ 
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+ 
+nnoremap <silent> <A-6> :Vista!!<CR>
+
+"cppman config
+function! s:JbzCppMan()
+    let old_isk = &iskeyword
+    setl iskeyword+=:
+    let str = expand("<cword>")
+    let &l:iskeyword = old_isk
+    execute 'Man ' . str
+endfunction
+command! JbzCppMan :call s:JbzCppMan()
+au FileType cpp nnoremap <buffer>K :JbzCppMan<CR>
+
+
+
+nnoremap <silent> <A-6> :Vista!!<CR>
+
+
+function! s:JbzClangFormat(first, last)
+  let l:winview = winsaveview()
+  execute a:first . "," . a:last . "!clang-format -style=\"{ BasedOnStyle: Chromium, IndentWidth: 4}\""
+  call winrestview(l:winview)
+endfunction
+command! -range=% JbzClangFormat call <sid>JbzClangFormat (<line1>, <line2>)
+
+au FileType c,cpp nnoremap <leader>lf :<C-u>JbzClangFormat<CR>
+au FileType c,cpp vnoremap <leader>lf :JbzClangFormat<CR>
+
+
+let g:rainbow_active = 1
 
 
